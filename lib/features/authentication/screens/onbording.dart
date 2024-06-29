@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
+import 'package:shuttle_app/features/authentication/screens/signUp/sign_up.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/image_strings.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';
@@ -61,7 +62,7 @@ class OnboardingScreen extends StatelessWidget {
 
                   OutlinedButton(
                     onPressed: () {
-                      // Navigate to Sign Up Page
+                      AppHelperFunctions.navigateToScreen(context, const SignUpScreen());
                     },
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: AppColor.primaryColor),

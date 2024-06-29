@@ -4,11 +4,13 @@ class AppText{
   static const String description = "Office Transportaion Service";
   static const String home = "Home";
   static const String profile = "Profile";
+  static const String name = "Name";
   static const String settings = "Settings";
   static const String logout = "Logout";
   static const String login = "Login";
   static const String register = "Sign Up";
   static const String email = "Email";
+  static const String phoneNumber = "Phone Number";
   static const String password = "Password";
   static const String confirmPassword = "Confirm Password";
   static const String forgotPassword = "Forgot Password";
@@ -17,6 +19,7 @@ class AppText{
   static const String haveAccount = "Already have an account?";
   static const String resetPassword = "Reset Password";
   static const String orLoginWith = "Or login with";
+  static const String orSignUpWith = "Or sign up with";
   static const String loginWithGoogle = "Login with Google";
   static const String resetPasswordInstructions = "Enter your email address and we'll send you a link to reset your password.";
   static const String resetPasswordSuccess = "Password reset email sent. Check your inbox.";
