@@ -44,6 +44,7 @@ class OnboardingScreen extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.primaryColor, 
+                        side: const BorderSide(color: AppColor.primaryColor),
                       ),
                       onPressed: (){
                         AppHelperFunctions.navigateToScreen(context, const LoginScreen());

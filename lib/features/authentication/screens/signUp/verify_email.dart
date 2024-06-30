@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shuttle_app/commons/widgets/success_screen.dart';
+import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/image_strings.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';
 import 'package:shuttle_app/utils/constants/text.dart';
@@ -61,6 +62,10 @@ class VerifyEmailScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColor.primaryColor,
+                            side: const BorderSide(color: AppColor.primaryColor),
+                          ),
                   onPressed: () {
                     AppHelperFunctions.navigateToScreen(context, const SuccessScreen());
                   },
