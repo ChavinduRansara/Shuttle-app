@@ -14,6 +14,8 @@ class AppText{
   static const String password = "Password";
   static const String confirmPassword = "Confirm Password";
   static const String forgotPassword = "Forgot Password";
+  static const String done = "Done";
+  static const String forgotPasswordDescription = "Don't worry! Just enter your email and we will send you a link to reset your password.";
   static const String rememberMe = "Remember Me";
   static const String dontHaveAccount = "Don't have an account?";
   static const String haveAccount = "Already have an account?";
@@ -28,9 +30,9 @@ class AppText{
   static const String accountCreated = "Your account created successfully!";
   static const String successScreenDescription = "Welcome to Shuttle App. Your account has been created successfully. Please continue to login.";
   static const String resetPasswordInstructions = "Enter your email address and we'll send you a link to reset your password.";
-  static const String resetPasswordSuccess = "Password reset email sent. Check your inbox.";
+  static const String resetPasswordEmailSent = "Password reset email sent";
   static const String resetPasswordFailed = "Failed to send password reset email. Please try again.";
-  static const String resetPasswordEmailSent = "Password reset email sent. Check your inbox.";
+  static const String resetPasswordSuccess = "We have sent a password reset link to your email address. Please check your email.";
   static const String resetPasswordEmailFailed = "Failed to send password reset email. Please try again.";
   static const String resetPasswordEmailInvalid = "The email address is badly formatted.";
   static const String resetPasswordEmailNotFound = "There is no user record corresponding to this identifier. The user may have been deleted.";

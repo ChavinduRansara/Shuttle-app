@@ -8,5 +8,6 @@ class AppImages{
   static const String onboardingWaves = 'assets/images/bottom_waves.png';
   static const String verifyEmail = 'assets/images/verify_email.png';
   static const String successImage = 'assets/images/confirm.png';
+  static const String resetPassword = 'assets/images/reset_password.png';
 
 }

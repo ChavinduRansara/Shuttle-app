@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shuttle_app/commons/widgets/custom_input_field.dart';
+import 'package:shuttle_app/features/authentication/screens/password_configuration/forget_password.dart';
 import 'package:shuttle_app/features/authentication/screens/signUp/sign_up.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/image_strings.dart';
@@ -97,7 +98,9 @@ class LoginScreen extends StatelessWidget {
 
                           /// Forgot password
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              AppHelperFunctions.navigateToScreen(context, const ForgetPassword());
+                            },
                             child: const Text(
                               AppText.forgotPassword,
                               style: TextStyle(

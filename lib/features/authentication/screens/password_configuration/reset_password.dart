@@ -1,0 +1,90 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shuttle_app/features/authentication/screens/login/login.dart';
+import 'package:shuttle_app/utils/constants/image_strings.dart';
+import 'package:shuttle_app/utils/constants/sizes.dart';
+import 'package:shuttle_app/utils/constants/text.dart';
+import 'package:shuttle_app/utils/helpers/helper_functions.dart';
+
+class ResetPassword extends StatelessWidget {
+  const ResetPassword({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(CupertinoIcons.clear),
+            onPressed: () => Get.back(),
+          ),
+        
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSizes.defaultSpace),
+          child: Column(
+            children: [
+              Image(
+                width: AppHelperFunctions.screenWidth() * 0.6,
+                image: const AssetImage(AppImages.resetPassword),
+              ),
+
+              const SizedBox(height: AppSizes.defaultSpace),
+
+              Text(
+                AppText.resetPasswordEmailSent,
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
+
+              const SizedBox(height: AppSizes.defaultSpace),
+
+              Text(
+                AppText.resetPasswordSuccess,
+                style: Theme.of(context).textTheme.labelMedium,
+                textAlign: TextAlign.center,
+              ),
+
+              const SizedBox(height: AppSizes.defaultSpace),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    AppHelperFunctions.navigateToScreen(context, const LoginScreen());
+                  },
+                  child: const Text(
+                    AppText.done,
+                    style: TextStyle(
+                      fontSize: AppSizes.fontSm,
+                      ),
+                    ),
+                ),
+              ),
+
+              const SizedBox(height: AppSizes.defaultSpace),
+
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    AppText.resendEmail,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: AppSizes.fontSm,
+                    ),
+                  ),
+                ),  
+              ),
+            ],
+          ),
+        ),
+      )
+    );
+  }
+}
