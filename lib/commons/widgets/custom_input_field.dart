@@ -32,7 +32,7 @@ Widget customInputField(
             borderRadius: BorderRadius.circular(10.0),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColor.primaryColor),
+            borderSide: const BorderSide(color: AppColor.primaryColor),
             borderRadius: BorderRadius.circular(10.0),
           ),
           labelStyle: TextStyle(
