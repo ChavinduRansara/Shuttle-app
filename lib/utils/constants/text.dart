@@ -21,6 +21,12 @@ class AppText{
   static const String orLoginWith = "Or login with";
   static const String orSignUpWith = "Or sign up with";
   static const String loginWithGoogle = "Login with Google";
+  static const String verifyEmail = "Verify your email !";
+  static const String tcontinue = "Continue";
+  static const String resendEmail = "Resend Email";
+  static const String verifyEmailInstructions = 'We have sent a verification link to your email address. Please verify your email address to continue.';
+  static const String accountCreated = "Your account created successfully!";
+  static const String successScreenDescription = "Welcome to Shuttle App. Your account has been created successfully. Please continue to login.";
   static const String resetPasswordInstructions = "Enter your email address and we'll send you a link to reset your password.";
   static const String resetPasswordSuccess = "Password reset email sent. Check your inbox.";
   static const String resetPasswordFailed = "Failed to send password reset email. Please try again.";

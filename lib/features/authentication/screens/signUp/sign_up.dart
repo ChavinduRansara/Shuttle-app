@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
+import 'package:shuttle_app/features/authentication/screens/signUp/verify_email.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/image_strings.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';
@@ -106,11 +107,13 @@ class SignUpScreen extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColor.primaryColor,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            AppHelperFunctions.navigateToScreen(context, const VerifyEmailScreen());
+                          },
                           child: const Text(
                             AppText.register,
                             style: TextStyle(
-                              fontSize: AppSizes.fontMd,
+                              fontSize: AppSizes.fontSm,
                               color: Colors.white,
                             ),
                           ),

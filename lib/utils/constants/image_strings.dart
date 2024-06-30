@@ -6,5 +6,7 @@ class AppImages{
   static const String waves = 'assets/images/waves.png';
   static const String onboardingImage = 'assets/images/onbording_image.png';
   static const String onboardingWaves = 'assets/images/bottom_waves.png';
+  static const String verifyEmail = 'assets/images/verify_email.png';
+  static const String successImage = 'assets/images/confirm.png';
 
 }
