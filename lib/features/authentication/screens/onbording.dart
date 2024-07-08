@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
 import 'package:shuttle_app/features/authentication/screens/signUp/sign_up.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
@@ -12,7 +13,8 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+    final storage = GetStorage();
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -47,6 +49,7 @@ class OnboardingScreen extends StatelessWidget {
                         side: const BorderSide(color: AppColor.primaryColor),
                       ),
                       onPressed: (){
+                        storage.write("isFirstTime", false);
                         AppHelperFunctions.navigateToScreen(context, const LoginScreen());
                       } ,
                         child: const Text(

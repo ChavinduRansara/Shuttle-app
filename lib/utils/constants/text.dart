@@ -45,4 +45,10 @@ class AppText{
   static const String resetPasswordEmailUserTokenInvalid = "The user's credential is no longer valid. The user must sign in again.";
   static const String resetPasswordEmailUserTokenMismatch = "The user's credential is no longer valid. The user must sign in again.";
   static const String resetPasswordEmailUserTokenNotFound = "The user's credential is no longer valid. The user must sign in again.";
+
+  static const String  proccessing = "We are processing your informations"; 
+  static const String noInternet = "No Internet Connection";
+  static const String somthingWrong = "somthing Went Wrong";
+  static const String signUpSuccess = "Sign Up Success";
+  static const String signUpSuccessMessage = "Your account has been created successfully. Verify your email to continue.";
 }

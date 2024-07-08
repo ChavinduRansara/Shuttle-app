@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:shuttle_app/features/authentication/controllers/sign_up/signup_controller.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
-import 'package:shuttle_app/features/authentication/screens/signUp/verify_email.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/image_strings.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';
 import 'package:shuttle_app/utils/constants/text.dart';
 import 'package:shuttle_app/utils/helpers/helper_functions.dart';
-import 'package:shuttle_app/commons/widgets/custom_input_field.dart'; 
+import 'package:shuttle_app/commons/widgets/custom_input_field.dart';
+import 'package:shuttle_app/utils/validator/validation.dart'; 
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -15,6 +17,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool dark  = AppHelperFunctions.isDarkMode(context);
+    final controller = Get.put(SignUpController());
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -38,6 +41,7 @@ class SignUpScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSizes.defaultSpace),
                 child: Form(
+                  key: controller.signUpFormKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -55,6 +59,8 @@ class SignUpScreen extends StatelessWidget {
 
                       /// Input field for name
                       customInputField(
+                        controller: controller.name,
+                        validatorFunction: (value) => AppValidator.validateEmpty(value),
                         context,
                         label: AppText.name,
                         prefixIcon: Iconsax.user_edit,
@@ -64,6 +70,8 @@ class SignUpScreen extends StatelessWidget {
 
                       /// Input field for email
                       customInputField(
+                        controller: controller.email,
+                        validatorFunction: (value) => AppValidator.validateEmail(value),
                         context,
                         label: AppText.email,
                         prefixIcon: Iconsax.direct,
@@ -73,6 +81,8 @@ class SignUpScreen extends StatelessWidget {
 
                       /// Input field for phone number
                       customInputField(
+                        controller: controller.phoneNumber,
+                        validatorFunction: (value) => AppValidator.validatePhoneNumber(value),
                         context,
                         label: AppText.phoneNumber,
                         prefixIcon: Iconsax.call,
@@ -82,6 +92,8 @@ class SignUpScreen extends StatelessWidget {
                       
                       /// Input field for password
                       customInputField(
+                        controller: controller.password,
+                        validatorFunction: (value) => AppValidator.validateEmpty(value),
                         context,
                         label: AppText.password,
                         prefixIcon: Iconsax.lock,
@@ -92,6 +104,8 @@ class SignUpScreen extends StatelessWidget {
 
                       /// Input field for confirm password
                       customInputField(
+                        controller: controller.confirmPassword,
+                        validatorFunction: (value) => AppValidator.validateConfirmPassword(value, controller.password.text),
                         context,
                         label: AppText.confirmPassword,
                         prefixIcon: Iconsax.lock,
@@ -109,7 +123,7 @@ class SignUpScreen extends StatelessWidget {
                             side: const BorderSide(color: AppColor.primaryColor),
                           ),
                           onPressed: () {
-                            AppHelperFunctions.navigateToScreen(context, const VerifyEmailScreen());
+                            controller.signUp();
                           },
                           child: const Text(
                             AppText.register,

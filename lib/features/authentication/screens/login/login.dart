@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shuttle_app/commons/widgets/custom_input_field.dart';
+import 'package:shuttle_app/features/authentication/controllers/login/login_controller.dart';
 import 'package:shuttle_app/features/authentication/screens/password_configuration/forget_password.dart';
 import 'package:shuttle_app/features/authentication/screens/signUp/sign_up.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
@@ -16,6 +18,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final bool dark  = AppHelperFunctions.isDarkMode(context);
+    final controller = Get.put(LoginController());
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -46,6 +49,7 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSizes.defaultSpace),
                 child: Form(
+                  key: controller.loginFormKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -61,6 +65,7 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(height: AppSizes.spaceBtwInputFields),
 
                       customInputField(
+                        controller: controller.email,
                         context,
                         label: AppText.email,
                         prefixIcon: Iconsax.direct,
@@ -71,6 +76,7 @@ class LoginScreen extends StatelessWidget {
                       /// Password input field
                 
                        customInputField(
+                        controller: controller.password,
                         context,
                         label: AppText.password,
                         prefixIcon: Iconsax.lock,
