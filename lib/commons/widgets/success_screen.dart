@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shuttle_app/commons/styles/spacing_styles.dart';
+import 'package:shuttle_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/image_strings.dart';
@@ -8,7 +11,9 @@ import 'package:shuttle_app/utils/constants/text.dart';
 import 'package:shuttle_app/utils/helpers/helper_functions.dart';
 
 class SuccessScreen extends StatelessWidget {
-  const SuccessScreen({super.key});
+  const SuccessScreen({super.key, this.email});
+
+  final String? email;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +39,7 @@ class SuccessScreen extends StatelessWidget {
               const SizedBox(height: AppSizes.defaultSpace),
               
               Text(
-                "email@gmail.com",
+                email?? '',
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.center,
               ),
@@ -57,7 +62,7 @@ class SuccessScreen extends StatelessWidget {
                             side: const BorderSide(color: AppColor.primaryColor),
                           ),
                   onPressed: () {
-                    AppHelperFunctions.navigateToScreen(context, const LoginScreen());
+                    AuthenticationRepository.instance.screenRedirect();
                   },
                   child: const Text(
                     AppText.tcontinue,
