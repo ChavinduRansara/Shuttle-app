@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shuttle_app/features/authentication/controllers/forget_password/forget_password_controller.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/image_strings.dart';
@@ -9,7 +10,9 @@ import 'package:shuttle_app/utils/constants/text.dart';
 import 'package:shuttle_app/utils/helpers/helper_functions.dart';
 
 class ResetPassword extends StatelessWidget {
-  const ResetPassword({super.key});
+  const ResetPassword({super.key, this.email});
+
+  final String? email;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class ResetPassword extends StatelessWidget {
                             side: const BorderSide(color: AppColor.primaryColor),
                           ), 
                   onPressed: () {
-                    AppHelperFunctions.navigateToScreen(context, const LoginScreen());
+                    Get.offAll(() => const LoginScreen());
                   },
                   child: const Text(
                     AppText.done,
@@ -76,7 +79,9 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ForgetPasswordController.instance.reSendPasswordResetEmail(email!);
+                  },
                   child: Text(
                     AppText.resendEmail,
                     style: TextStyle(
