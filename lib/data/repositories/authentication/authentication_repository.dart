@@ -7,8 +7,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:shuttle_app/features/authentication/screens/home/home.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
 import 'package:shuttle_app/features/authentication/screens/onbording.dart';
-import 'package:shuttle_app/features/authentication/screens/signUp/sign_up.dart';
 import 'package:shuttle_app/features/authentication/screens/signUp/verify_email.dart';
+import 'package:shuttle_app/utils/constants/exceptions/firebase_auth_exception.dart';
+import 'package:shuttle_app/utils/constants/exceptions/firebase_exception.dart';
+import 'package:shuttle_app/utils/constants/exceptions/platform_exception.dart';
 
 class AuthenticationRepository extends GetxController{
   static AuthenticationRepository get instance => Get.find();
@@ -43,19 +45,14 @@ class AuthenticationRepository extends GetxController{
     try {
       return await _auth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      Get.snackbar('FirebaseAuthException', e.message!);
-      rethrow;
+      throw AppFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
-      Get.snackbar('FirebaseException', e.message!);
-      rethrow;
+      throw AppFirebaseException(e.code).message;
     } on FormatException catch (e) {
-      Get.snackbar('FormatException', e.message);
-      rethrow;
+      throw e.message;
     } on PlatformException catch (e) {
-      Get.snackbar('PlatformException', e.message!);
-      rethrow;
+      throw AppPlatformException(e.code).message;
     } catch (e) {
-      Get.snackbar('Error', e.toString());
       rethrow;
     }
   }
@@ -64,19 +61,14 @@ class AuthenticationRepository extends GetxController{
     try{
       await _auth.currentUser?.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
-      Get.snackbar('FirebaseAuthException', e.message!);
-      rethrow;
+      throw AppFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
-      Get.snackbar('FirebaseException', e.message!);
-      rethrow;
+      throw AppFirebaseException(e.code).message;
     } on FormatException catch (e) {
-      Get.snackbar('FormatException', e.message);
-      rethrow;
+      throw e.message;
     } on PlatformException catch (e) {
-      Get.snackbar('PlatformException', e.message!);
-      rethrow;
+      throw AppPlatformException(e.code).message;
     } catch (e) {
-      Get.snackbar('Error', e.toString());
       rethrow;
     }
   }
@@ -85,19 +77,14 @@ class AuthenticationRepository extends GetxController{
     try {
       return await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      Get.snackbar('FirebaseAuthException', e.message!);
-      rethrow;
+      throw AppFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
-      Get.snackbar('FirebaseException', e.message!);
-      rethrow;
+      throw AppFirebaseException(e.code).message;
     } on FormatException catch (e) {
-      Get.snackbar('FormatException', e.message);
-      rethrow;
+      throw e.message;
     } on PlatformException catch (e) {
-      Get.snackbar('PlatformException', e.message!);
-      rethrow;
+      throw AppPlatformException(e.code).message;
     } catch (e) {
-      Get.snackbar('Error', e.toString());
       rethrow;
     }
   }
@@ -107,19 +94,14 @@ class AuthenticationRepository extends GetxController{
       await FirebaseAuth.instance.signOut();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
-      Get.snackbar('FirebaseAuthException', e.message!);
-      rethrow;
+      throw AppFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
-      Get.snackbar('FirebaseException', e.message!);
-      rethrow;
+      throw AppFirebaseException(e.code).message;
     } on FormatException catch (e) {
-      Get.snackbar('FormatException', e.message);
-      rethrow;
+      throw e.message;
     } on PlatformException catch (e) {
-      Get.snackbar('PlatformException', e.message!);
-      rethrow;
+      throw AppPlatformException(e.code).message;
     } catch (e) {
-      Get.snackbar('Error', e.toString());
       rethrow;
     }
   }

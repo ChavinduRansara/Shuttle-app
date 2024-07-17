@@ -40,10 +40,15 @@ class AppValidator{
     return null;
   }
 
-  static String? validatePhoneNumber(String? value){
-    if(!RegExp(r'^[0-9]{10}$').hasMatch(value!)){
-      return 'Enter a valid phone number';
-    }
-    return null;
+  static String? validatePhoneNumber(String? value) {
+  if (value == null || value.isEmpty) {
+    return null; 
   }
+  if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+    return 'Enter a valid phone number';
+  }
+  return null;
+}
+
+
 }

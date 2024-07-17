@@ -49,6 +49,7 @@ class AppText{
 
   static const String  proccessing = "We are processing your informations"; 
   static const String noInternet = "No Internet Connection";
+  static const String oops = "Oops!";
   static const String somthingWrong = "somthing Went Wrong";
   static const String signUpSuccess = "Sign Up Success";
   static const String signUpSuccessMessage = "Your account has been created successfully. Verify your email to continue.";

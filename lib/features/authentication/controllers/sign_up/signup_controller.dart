@@ -22,9 +22,16 @@ class SignUpController extends GetxController {
 
   void signUp() async {
     try {
+      
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        AppLoader.warnningSnackBar(title: AppText.oops, message: AppText.noInternet);
+        return;
+      }
+
       if (!signUpFormKey.currentState!.validate()) return;
 
-      loading.value = true; // Start loading
+      loading.value = true; 
 
       final user = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
 
@@ -38,12 +45,11 @@ class SignUpController extends GetxController {
       final userRepo = Get.put(UserRepository());
       await userRepo.saveUserDetails(newUser);
 
-      loading.value = false; // Stop loading
-
+      loading.value = false; 
       AppLoader.successSnackBar(title: AppText.signUpSuccess, message: AppText.signUpSuccessMessage);
       Get.to(() => VerifyEmailScreen(email: email.text.trim(),));
     } catch (e) {
-      loading.value = false; // Stop loading
+      loading.value = false; 
       AppLoader.errorSnackBar(title: AppText.somthingWrong, message: e.toString());
     }
   }
