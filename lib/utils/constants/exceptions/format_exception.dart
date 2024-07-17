@@ -1,26 +1,30 @@
 class AppFormatException implements Exception {
-  final String code;
+  final String message;
 
-  AppFormatException(this.code);
+  const AppFormatException([this.message = 'An error occurred. Please try again.']);
 
-  String get message {
+  factory AppFormatException.fromMessage(String message) {
+    return AppFormatException(message);
+  }
+
+  String get formattedMessage => message;
+
+  factory AppFormatException.fromCode(String code) {
     switch (code) {
-      case 'invalid-email':
-        return 'The email address is not valid.';
-      case 'invalid-phone-number':
-        return 'The phone number is not valid.';
-      case 'invalid-url':
-        return 'The URL is not valid.';
-      case 'invalid-json':
-        return 'The JSON format is not valid.';
-      case 'invalid-date':
-        return 'The date format is not valid.';
-      case 'empty-field':
-        return 'This field cannot be empty.';
-      case 'invalid-password':
-        return 'The password format is not valid.';
+      case 'invalid-email-format':
+        return const AppFormatException('The email address is not valid. Please enter a valid email address.');
+      case 'invalid-phone-number-format':
+        return const AppFormatException('The phone number is not valid. Please enter a valid phone number.');
+      case 'invalid-date-format':
+        return const AppFormatException('The date is not valid. Please enter a valid date.');
+      case 'invalid-time-format':
+        return const AppFormatException('The time is not valid. Please enter a valid time.');
+      case 'invalid-url-format':
+        return const AppFormatException('The URL is not valid. Please enter a valid URL.');
+      case 'invalid-numeric-format':
+        return const AppFormatException('The number is not valid. Please enter a valid number.');
       default:
-        return 'An unknown error occurred. Please try again.';
+        return const AppFormatException();
     }
   }
 }

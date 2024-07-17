@@ -3,6 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shuttle_app/features/personalization/model/user_model.dart';
+import 'package:shuttle_app/utils/constants/exceptions/firebase_exception.dart';
+import 'package:shuttle_app/utils/constants/exceptions/format_exception.dart';
+import 'package:shuttle_app/utils/constants/exceptions/platform_exception.dart';
 
 class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
@@ -13,16 +16,12 @@ class UserRepository extends GetxController {
     try {
       await _firestore.collection('users').doc(user.uid).set(user.toJson());
     } on FirebaseException catch (e) {
-      Get.snackbar('FirebaseException', e.message!);
-      rethrow;
-    } on FormatException catch (e) {
-      Get.snackbar('FormatException', e.message);
-      rethrow;
+      throw AppFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
     } on PlatformException catch (e) {
-      Get.snackbar('PlatformWxception', e.message!);
-      rethrow;
+      throw AppPlatformException(e.code).message;
     } catch (e) {
-      Get.snackbar('Error', e.toString());
       rethrow;
     }
   }

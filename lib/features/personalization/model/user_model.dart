@@ -12,6 +12,8 @@ class UserModel {
     required this.uid,
   });
 
+  static List<String> nameParts(fullName) => fullName.split(' ');
+   
   static UserModel empty() => UserModel(
     name: '',
     email: '',

@@ -168,7 +168,9 @@ class LoginScreen extends StatelessWidget {
                             width: AppSizes.iconMd,
                             image: AssetImage(AppImages.googleLogo),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            controller.googleLogin();
+                          },
                         ),
                       ),
                     ],

@@ -5,6 +5,10 @@ class AppFirebaseException implements Exception {
 
   String get message {
     switch (code) {
+      case 'unknown':
+        return 'An unknown error occurred. Please try again.';
+      case 'invalid-custom-token':
+        return 'The custom token format is incorrect. Please check the documentation.';
       case 'invalid-email':
         return 'The email address is not valid.';
       case 'wrong-password':
@@ -16,7 +20,7 @@ class AppFirebaseException implements Exception {
       case 'too-many-requests':
         return 'Too many requests. Try again later.';
       case 'operation-not-allowed':
-        return 'Email and password accounts are not enabled.';
+        return 'This operation is not allowed. Please contact support.';
       case 'weak-password':
         return 'The password is too weak.';
       case 'email-already-in-use':
@@ -33,6 +37,9 @@ class AppFirebaseException implements Exception {
         return 'The verification code is invalid.';
       case 'invalid-verification-id':
         return 'The verification ID is invalid.';
+      case 'provider-already-linked':
+        return 'This account is already linked with another user account.';
+      
       default:
         return 'An unknown error occurred. Please try again.';
     }

@@ -4,12 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shuttle_app/features/authentication/screens/home/home.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
 import 'package:shuttle_app/features/authentication/screens/onbording.dart';
 import 'package:shuttle_app/features/authentication/screens/signUp/verify_email.dart';
 import 'package:shuttle_app/utils/constants/exceptions/firebase_auth_exception.dart';
 import 'package:shuttle_app/utils/constants/exceptions/firebase_exception.dart';
+import 'package:shuttle_app/utils/constants/exceptions/format_exception.dart';
 import 'package:shuttle_app/utils/constants/exceptions/platform_exception.dart';
 
 class AuthenticationRepository extends GetxController{
@@ -48,8 +50,8 @@ class AuthenticationRepository extends GetxController{
       throw AppFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw AppFirebaseException(e.code).message;
-    } on FormatException catch (e) {
-      throw e.message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
     } on PlatformException catch (e) {
       throw AppPlatformException(e.code).message;
     } catch (e) {
@@ -64,8 +66,8 @@ class AuthenticationRepository extends GetxController{
       throw AppFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw AppFirebaseException(e.code).message;
-    } on FormatException catch (e) {
-      throw e.message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
     } on PlatformException catch (e) {
       throw AppPlatformException(e.code).message;
     } catch (e) {
@@ -80,8 +82,34 @@ class AuthenticationRepository extends GetxController{
       throw AppFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw AppFirebaseException(e.code).message;
-    } on FormatException catch (e) {
-      throw e.message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
+    } on PlatformException catch (e) {
+      throw AppPlatformException(e.code).message;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      return await _auth.signInWithCredential(credential);
+
+    } on FirebaseAuthException catch (e) {
+      throw AppFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw AppFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
     } on PlatformException catch (e) {
       throw AppPlatformException(e.code).message;
     } catch (e) {
@@ -97,8 +125,8 @@ class AuthenticationRepository extends GetxController{
       throw AppFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw AppFirebaseException(e.code).message;
-    } on FormatException catch (e) {
-      throw e.message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
     } on PlatformException catch (e) {
       throw AppPlatformException(e.code).message;
     } catch (e) {
