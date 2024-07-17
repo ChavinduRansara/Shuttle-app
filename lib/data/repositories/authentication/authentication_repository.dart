@@ -4,8 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:shuttle_app/features/authentication/screens/home/home.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
 import 'package:shuttle_app/features/authentication/screens/onbording.dart';
+import 'package:shuttle_app/features/authentication/screens/signUp/sign_up.dart';
 import 'package:shuttle_app/features/authentication/screens/signUp/verify_email.dart';
 
 class AuthenticationRepository extends GetxController{
@@ -25,7 +27,7 @@ class AuthenticationRepository extends GetxController{
     final user = _auth.currentUser;
     if(user != null){
       if(user.emailVerified){
-        Get.offAll(() => const LoginScreen());
+        Get.offAll(() => const HomeScreen());
       } else {
         Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email,));
       }
@@ -61,6 +63,27 @@ class AuthenticationRepository extends GetxController{
   Future<void> sendEmailVerification() async {
     try{
       await _auth.currentUser?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar('FirebaseAuthException', e.message!);
+      rethrow;
+    } on FirebaseException catch (e) {
+      Get.snackbar('FirebaseException', e.message!);
+      rethrow;
+    } on FormatException catch (e) {
+      Get.snackbar('FormatException', e.message);
+      rethrow;
+    } on PlatformException catch (e) {
+      Get.snackbar('PlatformException', e.message!);
+      rethrow;
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+      rethrow;
+    }
+  }
+
+  Future<UserCredential> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      return await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       Get.snackbar('FirebaseAuthException', e.message!);
       rethrow;

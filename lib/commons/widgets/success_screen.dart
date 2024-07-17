@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:shuttle_app/commons/styles/spacing_styles.dart';
 import 'package:shuttle_app/data/repositories/authentication/authentication_repository.dart';
-import 'package:shuttle_app/features/authentication/screens/login/login.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/image_strings.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shuttle_app/commons/widgets/custom_input_field.dart';
 import 'package:shuttle_app/features/authentication/controllers/login/login_controller.dart';
@@ -10,6 +11,7 @@ import 'package:shuttle_app/utils/constants/image_strings.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';
 import 'package:shuttle_app/utils/constants/text.dart';
 import 'package:shuttle_app/utils/helpers/helper_functions.dart';
+import 'package:shuttle_app/utils/validator/validation.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -66,6 +68,7 @@ class LoginScreen extends StatelessWidget {
 
                       customInputField(
                         controller: controller.email,
+                        validatorFunction: (value) => AppValidator.validateEmail(value), 
                         context,
                         label: AppText.email,
                         prefixIcon: Iconsax.direct,
@@ -75,8 +78,9 @@ class LoginScreen extends StatelessWidget {
 
                       /// Password input field
                 
-                       customInputField(
+                      customInputField(
                         controller: controller.password,
+                        validatorFunction: (value) => AppValidator.validateEmpty(value),
                         context,
                         label: AppText.password,
                         prefixIcon: Iconsax.lock,
@@ -91,10 +95,12 @@ class LoginScreen extends StatelessWidget {
                           /// Remember me
                           Row(
                             children: [
-                              Checkbox(
-                                value: true,
-                                onChanged: (value) {},
-                                activeColor: AppColor.primaryColor,
+                              Obx(
+                                () => Checkbox(
+                                  value: controller.rememberMe.value,
+                                  onChanged: (value) => controller.rememberMe.value = !controller.rememberMe.value,
+                                  activeColor: AppColor.primaryColor,
+                                ),
                               ),
                               const Text(AppText.rememberMe),
                             ],
@@ -127,7 +133,9 @@ class LoginScreen extends StatelessWidget {
                             backgroundColor: AppColor.primaryColor, 
                             side: const BorderSide(color: AppColor.primaryColor),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            controller.login();
+                          },
                           child: const Text(
                             AppText.login,
                             style: TextStyle(

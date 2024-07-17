@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shuttle_app/commons/widgets/success_screen.dart';
 import 'package:shuttle_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:shuttle_app/features/authentication/controllers/sign_up/verify_controller.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';

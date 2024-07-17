@@ -9,6 +9,7 @@ class AppText{
   static const String logout = "Logout";
   static const String login = "Login";
   static const String register = "Sign Up";
+  static const String signOut = "Sign Out";
   static const String email = "Email";
   static const String phoneNumber = "Phone Number";
   static const String password = "Password";
