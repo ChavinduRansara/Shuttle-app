@@ -13,67 +13,74 @@ class ForgetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.put(ForgetPasswordController());
 
     return Scaffold(
-      appBar: AppBar(
-        
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(AppSizes.defaultSpace),
-        child: Form(
-          key: controller.forgetPasswordFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                AppText.forgotPassword,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-          
-              const SizedBox(height: AppSizes.spaceBtwItems),
-          
-              Text(
-                AppText.forgotPasswordDescription,
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-          
-              const SizedBox(height: AppSizes.spaceBtwSectios),
-              
-              customInputField(
-                controller: controller.email,
-                validatorFunction: (value) => AppValidator.validateEmail(value),
-                context,
-                label: AppText.email,
-                prefixIcon: Iconsax.direct_right,
-              ),
-          
-              const SizedBox(height: AppSizes.defaultSpace),
-          
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColor.primaryColor, 
-                              side: const BorderSide(color: AppColor.primaryColor),
-                            ),
-                  onPressed: (){
-                    controller.sendPasswordResetEmail();
-                  }, 
-                  child: const Text(
-                    AppText.resetPassword,
-                    style: TextStyle(
-                      fontSize: AppSizes.fontSm,
+      appBar: AppBar(),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(AppSizes.defaultSpace),
+            child: Form(
+              key: controller.forgetPasswordFormKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppText.forgotPassword,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwItems),
+                  Text(
+                    AppText.forgotPasswordDescription,
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwSectios),
+                  customInputField(
+                    controller: controller.email,
+                    validatorFunction: (value) => AppValidator.validateEmail(value),
+                    context,
+                    label: AppText.email,
+                    prefixIcon: Iconsax.direct_right,
+                  ),
+                  const SizedBox(height: AppSizes.defaultSpace),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.primaryColor,
+                        side: const BorderSide(color: AppColor.primaryColor),
+                      ),
+                      onPressed: () {
+                        controller.sendPasswordResetEmail();
+                      },
+                      child: const Text(
+                        AppText.resetPassword,
+                        style: TextStyle(
+                          fontSize: AppSizes.fontSm,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-          
-            ],
+            ),
           ),
-        ),
-      )
+          Obx(() {
+            if (controller.loading.value) {
+              return Container(
+                color: Colors.black54,
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColor.primaryColor),
+                  ),
+                ),
+              );
+            }
+            return const SizedBox.shrink();
+          }),
+        ],
+      ),
     );
   }
 }

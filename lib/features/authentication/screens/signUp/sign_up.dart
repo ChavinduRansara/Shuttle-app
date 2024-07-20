@@ -16,7 +16,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool dark = AppHelperFunctions.isDarkMode(context);
+    AppHelperFunctions.isDarkMode(context);
     final controller = Get.put(SignUpController());
 
     return Scaffold(

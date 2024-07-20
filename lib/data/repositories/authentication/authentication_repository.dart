@@ -9,6 +9,7 @@ import 'package:shuttle_app/features/authentication/screens/home/home.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
 import 'package:shuttle_app/features/authentication/screens/onbording.dart';
 import 'package:shuttle_app/features/authentication/screens/signUp/verify_email.dart';
+import 'package:shuttle_app/navigation_menu.dart';
 import 'package:shuttle_app/utils/constants/exceptions/firebase_auth_exception.dart';
 import 'package:shuttle_app/utils/constants/exceptions/firebase_exception.dart';
 import 'package:shuttle_app/utils/constants/exceptions/format_exception.dart';
@@ -31,7 +32,7 @@ class AuthenticationRepository extends GetxController{
     final user = _auth.currentUser;
     if(user != null){
       if(user.emailVerified){
-        Get.offAll(() => const HomeScreen());
+        Get.offAll(() => const NavigationMenu());
       } else {
         Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email,));
       }

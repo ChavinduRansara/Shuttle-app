@@ -11,43 +11,51 @@ class ForgetPasswordController extends GetxController {
 
   final email = TextEditingController();
   final GlobalKey<FormState> forgetPasswordFormKey = GlobalKey<FormState>();
+  final loading = false.obs; 
 
-  sendPasswordResetEmail() async {
+  Future<void> sendPasswordResetEmail() async {
     try {
-
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AppLoader.warnningSnackBar(title: AppText.oops, message: AppText.noInternet);
         return;
       }
-      
+
       if (!forgetPasswordFormKey.currentState!.validate()) return;
+
+      loading.value = true; 
 
       await AuthenticationRepository.instance.sendPasswordResetEmail(email.text.trim());
 
-      AppLoader.successSnackBar(title: AppText.done, message: AppText.resetPasswordEmailSent);
+      loading.value = false; 
 
+      AppLoader.successSnackBar(title: AppText.done, message: AppText.resetPasswordEmailSent);
       Get.to(() => ResetPassword(email: email.text.trim()));
 
     } catch (e) {
+      loading.value = false; 
       Get.snackbar('Error', e.toString());
     }
   }
 
-   reSendPasswordResetEmail(String email) async {
+  Future<void> reSendPasswordResetEmail(String email) async {
     try {
-
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         AppLoader.warnningSnackBar(title: AppText.oops, message: AppText.noInternet);
         return;
       }
 
+      loading.value = true; 
+
       await AuthenticationRepository.instance.sendPasswordResetEmail(email);
+
+      loading.value = false; 
 
       AppLoader.successSnackBar(title: AppText.done, message: AppText.resetPasswordEmailSent);
 
     } catch (e) {
+      loading.value = false; 
       Get.snackbar('Error', e.toString());
     }
   }
