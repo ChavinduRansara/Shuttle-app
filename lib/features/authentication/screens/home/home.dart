@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:shuttle_app/commons/widgets/container/card.dart';
 import 'package:shuttle_app/commons/widgets/container/custom_search_bar.dart';
 import 'package:shuttle_app/commons/widgets/container/primary_header_container.dart';
+import 'package:shuttle_app/commons/widgets/container/section_headings.dart';
 import 'package:shuttle_app/commons/widgets/header_discription.dart';
 import 'package:shuttle_app/data/repositories/authentication/authentication_repository.dart';
-import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';
 import 'package:shuttle_app/utils/constants/text.dart';
 
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(AuthenticationRepository());
-    return Scaffold(
+    return  Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -31,29 +31,41 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             
+            Padding(
+              padding: const EdgeInsets.all(AppSizes.defaultSpace),
+              child: Column(
+                children: [
+                  const AppSectionHeading(title: AppText.pickService, showActionButton: false,),
 
-            SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColor.primaryColor,
-                                side: const BorderSide(color: AppColor.primaryColor),
-                              ),
-                              onPressed: () {
-                                controller.signOut();
-                              },
-                              child: const Text(
-                                AppText.signOut,
-                                style: TextStyle(
-                                  fontSize: AppSizes.fontSm,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-            // Your other widgets go here
+                  const SizedBox(height: AppSizes.spaceBtwItems,),
+
+                  ShuttleServiceCard(
+                    serviceName: 'Galle Road',
+                    isAvailable: true,
+                    onTap: (){},
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwItems,),
+                  ShuttleServiceCard(
+                    serviceName: 'High Level Road',
+                    isAvailable: true,
+                    onTap: (){},
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwItems,),
+                  ShuttleServiceCard(
+                    serviceName: 'Horana',
+                    isAvailable: false,
+                    onTap: (){},
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwItems,),
+                  ShuttleServiceCard(
+                    serviceName: 'Accommodation Shuttle',
+                    isAvailable: true,
+                    onTap: (){},
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
