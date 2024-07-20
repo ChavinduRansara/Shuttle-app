@@ -7,9 +7,11 @@ class CustomPrimaryHeaderContainer extends StatelessWidget {
   const CustomPrimaryHeaderContainer({
     super.key,
     this.child,
+    this.height = 300
   });
 
   final Widget? child;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class CustomPrimaryHeaderContainer extends StatelessWidget {
         color: AppColor.primaryColor,
         padding: const EdgeInsets.all(0),
         child: SizedBox(
-          height: 300,
+          height: height,
           child: Stack(
             children: [
               Positioned(

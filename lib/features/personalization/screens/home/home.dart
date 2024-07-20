@@ -6,8 +6,10 @@ import 'package:shuttle_app/commons/widgets/container/primary_header_container.d
 import 'package:shuttle_app/commons/widgets/container/section_headings.dart';
 import 'package:shuttle_app/commons/widgets/header_discription.dart';
 import 'package:shuttle_app/data/repositories/authentication/authentication_repository.dart';
+import 'package:shuttle_app/features/personalization/screens/home/book_service.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';
 import 'package:shuttle_app/utils/constants/text.dart';
+import 'package:shuttle_app/utils/helpers/helper_functions.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -43,7 +45,9 @@ class HomeScreen extends StatelessWidget {
                   ShuttleServiceCard(
                     serviceName: 'Galle Road',
                     isAvailable: true,
-                    onTap: (){},
+                    onTap: (){
+                      AppHelperFunctions.navigateToScreen(context, const BookAService());
+                    },
                   ),
                   const SizedBox(height: AppSizes.spaceBtwItems,),
                   ShuttleServiceCard(

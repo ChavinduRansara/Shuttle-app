@@ -11,5 +11,6 @@ class AppImages{
   static const String resetPassword = 'assets/images/reset_password.png';
   static const String spinner = 'assets/images/spinner.gif';
   static const String profile = 'assets/images/profile.png';
+  static const String bus = 'assets/images/bus.png';
 
 }

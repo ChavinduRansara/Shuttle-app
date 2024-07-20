@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:shuttle_app/features/authentication/screens/home/home.dart';
+import 'package:shuttle_app/features/personalization/screens/home/home.dart';
+import 'package:shuttle_app/features/personalization/screens/map/user_ride.dart';
 import 'package:shuttle_app/features/personalization/screens/profile/profile.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 
@@ -24,6 +25,7 @@ class NavigationMenu extends StatelessWidget {
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
+            NavigationDestination(icon: Icon(Iconsax.map), label: 'Journey'),
             NavigationDestination(icon: Icon(Iconsax.clock), label: 'History'),
           ],
         ),
@@ -40,6 +42,7 @@ class NavigatioController extends GetxController {
   final screens = [
     const HomeScreen(),
     const ProfileScreen(),
+    const RideScreen(),
     Container(color: Colors.blue),
   ];
 

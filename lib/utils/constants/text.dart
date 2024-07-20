@@ -29,6 +29,7 @@ class AppText{
   static const String resendEmail = "Resend Email";
   static const String changePicture = "Change Profile Picture";
   static const String pickService= "Pick a shuttle service";
+  static const String book= "Setup Your Ride";
   static const String verifyEmailInstructions = 'We have sent a verification link to your email address. Please verify your email address to continue.';
   static const String accountCreated = "Your account created successfully!";
   static const String successScreenDescription = "Welcome to Shuttle App. Your account has been created successfully. Please continue to login.";
