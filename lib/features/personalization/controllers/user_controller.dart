@@ -18,6 +18,7 @@ class UserController extends GetxController {
           email: userCredential.user!.email!,
           phoneNumber: userCredential.user!.phoneNumber ?? '',
           uid: userCredential.user!.uid,
+          profilePicture: userCredential.user!.photoURL,
         );
         
         await userRepository.saveUserDetails(newUser);

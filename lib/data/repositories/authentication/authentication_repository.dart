@@ -5,7 +5,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shuttle_app/features/authentication/screens/home/home.dart';
 import 'package:shuttle_app/features/authentication/screens/login/login.dart';
 import 'package:shuttle_app/features/authentication/screens/onbording.dart';
 import 'package:shuttle_app/features/authentication/screens/signUp/verify_email.dart';
@@ -25,6 +24,13 @@ class AuthenticationRepository extends GetxController{
   void onReady() {
     FlutterNativeSplash.remove();
     screenRedirect();
+  }
+
+  get currentUser => _auth.currentUser;
+
+  getLastName() {
+    final name = _auth.currentUser?.displayName;
+    return name?.split(' ').last;
   }
 
   /// Redirects user to the appropriate screen

@@ -40,6 +40,7 @@ class SignUpController extends GetxController {
         email: email.text.trim(),
         phoneNumber: phoneNumber.text.trim(),
         uid: user.user!.uid,
+        profilePicture: user.user!.photoURL,
       );
 
       final userRepo = Get.put(UserRepository());

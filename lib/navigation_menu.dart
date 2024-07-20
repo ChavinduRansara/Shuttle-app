@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shuttle_app/features/authentication/screens/home/home.dart';
+import 'package:shuttle_app/features/personalization/screens/profile/profile.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 
 class NavigationMenu extends StatelessWidget {
@@ -39,7 +39,7 @@ class NavigatioController extends GetxController {
 
   final screens = [
     const HomeScreen(),
-    Container(color: Colors.green),
+    const ProfileScreen(),
     Container(color: Colors.blue),
   ];
 

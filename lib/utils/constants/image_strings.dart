@@ -10,5 +10,6 @@ class AppImages{
   static const String successImage = 'assets/images/confirm.png';
   static const String resetPassword = 'assets/images/reset_password.png';
   static const String spinner = 'assets/images/spinner.gif';
+  static const String profile = 'assets/images/profile.png';
 
 }

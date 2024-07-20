@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:shuttle_app/commons/widgets/container/circular_container.dart';
-import 'package:shuttle_app/commons/widgets/container/curve_edge_widget.dart';
+import 'package:shuttle_app/commons/widgets/container/custom_search_bar.dart';
+import 'package:shuttle_app/commons/widgets/container/primary_header_container.dart';
+import 'package:shuttle_app/commons/widgets/header_discription.dart';
 import 'package:shuttle_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';
@@ -17,29 +19,21 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomCurveEdgeWidget(
-              child: Container(
-                color: AppColor.primaryColor,
-                padding: const EdgeInsets.all(0),
-                child: SizedBox(
-                  height: 300,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: -150,
-                        right: -250,
-                        child: CustomCircularContainer(backgroundColor: AppColor.textWhite.withOpacity(0.2),)
-                      ),
-                      Positioned(
-                        top: 150,
-                        right: -150,
-                        child: CustomCircularContainer(backgroundColor: AppColor.textWhite.withOpacity(0.2),)
-                      ),
-                    ]
-                  ),
-                ),
+            const CustomPrimaryHeaderContainer(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomHeaderDiscription(), 
+
+                  SizedBox(height: AppSizes.spaceBtwSectios/2,),
+                  
+                  CustomSearchBar(text: 'Search here',), 
+                ],
               ),
             ),
+
+            
+
             SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -51,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                                 controller.signOut();
                               },
                               child: const Text(
-                                AppText.logout,
+                                AppText.signOut,
                                 style: TextStyle(
                                   fontSize: AppSizes.fontSm,
                                   color: Colors.white,
@@ -59,11 +53,11 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
+            // Your other widgets go here
           ],
         ),
       ),
     );
   }
 }
-
 
