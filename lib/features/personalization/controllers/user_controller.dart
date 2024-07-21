@@ -9,6 +9,22 @@ class UserController extends GetxController {
   static UserController get instance => Get.find();
 
   final userRepository = Get.put(UserRepository());
+  Rx<UserModel> user = UserModel.empty().obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchUserRecords();
+  }
+
+  Future<void> fetchUserRecords() async {
+    try{
+      final user = await userRepository.fetchUserDetails();
+      this.user(user);
+    }catch(e){
+      user(UserModel.empty());
+    }
+  }
 
   Future<void> saveUserRecords(UserCredential? userCredential) async {
     try{
@@ -19,6 +35,7 @@ class UserController extends GetxController {
           phoneNumber: userCredential.user!.phoneNumber ?? '',
           uid: userCredential.user!.uid,
           profilePicture: userCredential.user!.photoURL,
+          address: '',
         );
         
         await userRepository.saveUserDetails(newUser);

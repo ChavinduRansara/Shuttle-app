@@ -26,7 +26,7 @@ class AuthenticationRepository extends GetxController{
     screenRedirect();
   }
 
-  get currentUser => _auth.currentUser;
+  User? get currentUser => _auth.currentUser;
 
   getLastName() {
     final name = _auth.currentUser?.displayName;

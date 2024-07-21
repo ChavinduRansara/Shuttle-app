@@ -1,4 +1,8 @@
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:shuttle_app/features/personalization/controllers/user_controller.dart';
 
 class CustomHeaderDiscription extends StatelessWidget {
   const CustomHeaderDiscription({
@@ -7,15 +11,16 @@ class CustomHeaderDiscription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(top: 80,left: 20,right: 20,bottom: 20),
+    final controller = Get.put(UserController());
+    return  Padding(
+      padding: const EdgeInsets.only(top: 80,left: 20,right: 20,bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Hi,',
                 style: TextStyle(
                   color: Colors.white,
@@ -23,18 +28,19 @@ class CustomHeaderDiscription extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                'User',
-                // controller.getLastName(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              Obx(
+                ()=> Text(
+                  controller.user.value.name.split(' ').last,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
           ),
-          CircleAvatar(
+          const CircleAvatar(
             radius: 25,
             backgroundColor: Colors.black,
             child: Icon(

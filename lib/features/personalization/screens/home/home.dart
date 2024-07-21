@@ -6,6 +6,7 @@ import 'package:shuttle_app/commons/widgets/container/primary_header_container.d
 import 'package:shuttle_app/commons/widgets/container/section_headings.dart';
 import 'package:shuttle_app/commons/widgets/header_discription.dart';
 import 'package:shuttle_app/data/repositories/authentication/authentication_repository.dart';
+import 'package:shuttle_app/data/repositories/user/user_repository.dart';
 import 'package:shuttle_app/features/personalization/screens/home/book_service.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';
 import 'package:shuttle_app/utils/constants/text.dart';
@@ -16,7 +17,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AuthenticationRepository());
     return  Scaffold(
       body: SingleChildScrollView(
         child: Column(

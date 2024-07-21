@@ -5,7 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 
 class AppLoader{
-  static successSnackBar({required title, message = '', duration = 5}){
+  static successSnackBar({required title, message = '', duration = 3}){
     Get.snackbar(
       title,
       message,
@@ -20,7 +20,7 @@ class AppLoader{
     );
   }
 
-  static warnningSnackBar({required title, message = '', duration = 5}){
+  static warnningSnackBar({required title, message = '', duration = 4}){
     Get.snackbar(
       title,
       message,

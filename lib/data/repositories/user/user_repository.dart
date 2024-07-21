@@ -1,7 +1,10 @@
 
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:shuttle_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:shuttle_app/features/personalization/model/user_model.dart';
 import 'package:shuttle_app/utils/constants/exceptions/firebase_exception.dart';
 import 'package:shuttle_app/utils/constants/exceptions/format_exception.dart';
@@ -28,12 +31,54 @@ class UserRepository extends GetxController {
 
   Future<UserModel> fetchUserDetails() async {
     try {
-      final userDoc = await _firestore.collection('users').doc().get();
+      final userDoc = await _firestore.collection('users').doc(AuthenticationRepository.instance.currentUser?.uid).get();
       if (userDoc.exists) {
-        return UserModel.fromJson(userDoc.data()!);
+        return UserModel.fromSnapshot(userDoc);
       } else {
         return UserModel.empty();
       }
+    } on FirebaseException catch (e) {
+      throw AppFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
+    } on PlatformException catch (e) {
+      throw AppPlatformException(e.code).message;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateUserDetails(UserModel updatedUser) async {
+    try {
+      await _firestore.collection('users').doc(updatedUser.uid).update(updatedUser.toJson());
+    } on FirebaseException catch (e) {
+      throw AppFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
+    } on PlatformException catch (e) {
+      throw AppPlatformException(e.code).message;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateSingleField(Map<String, dynamic> json) async {
+    try {
+      await _firestore.collection('users').doc(AuthenticationRepository.instance.currentUser?.uid).update(json);
+    } on FirebaseException catch (e) {
+      throw AppFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
+    } on PlatformException catch (e) {
+      throw AppPlatformException(e.code).message;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> removeUserRecord(String userId) async {
+    try {
+      await _firestore.collection('users').doc(userId).delete();
     } on FirebaseException catch (e) {
       throw AppFirebaseException(e.code).message;
     } on FormatException catch (_) {
