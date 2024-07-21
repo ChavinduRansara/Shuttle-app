@@ -161,7 +161,7 @@ class BookAService extends StatelessWidget {
                               side: const BorderSide(color: AppColor.primaryColor),
                             ),
                             onPressed: () {
-                              AppHelperFunctions.navigateToScreen(context, const RideScreen());
+                              // AppHelperFunctions.navigateToScreen(context, const RideScreen());
                             },
                             child: const Text(
                               'Reserve',

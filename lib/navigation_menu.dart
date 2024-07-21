@@ -42,6 +42,7 @@ class NavigatioController extends GetxController {
   final screens = [
     const HomeScreen(),
     const ProfileScreen(),
+    // Container(color: Colors.red),
     const RideScreen(),
     Container(color: Colors.blue),
   ];

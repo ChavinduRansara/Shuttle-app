@@ -25,4 +25,23 @@ class UserRepository extends GetxController {
       rethrow;
     }
   }
+
+  Future<UserModel> fetchUserDetails() async {
+    try {
+      final userDoc = await _firestore.collection('users').doc().get();
+      if (userDoc.exists) {
+        return UserModel.fromJson(userDoc.data()!);
+      } else {
+        return UserModel.empty();
+      }
+    } on FirebaseException catch (e) {
+      throw AppFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
+    } on PlatformException catch (e) {
+      throw AppPlatformException(e.code).message;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

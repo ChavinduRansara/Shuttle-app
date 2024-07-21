@@ -16,7 +16,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppHelperFunctions.isDarkMode(context);
+    final bool dark = AppHelperFunctions.isDarkMode(context);
     final controller = Get.put(SignUpController());
 
     return Scaffold(
@@ -121,6 +121,57 @@ class SignUpScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AppSizes.spaceBtwSectios / 2),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Divider(
+                          color: dark ? AppColor.darkGray : AppColor.gray,
+                          thickness: 0.5,
+                          indent: 60,
+                          endIndent: 5,
+                        ),
+                      ),
+                      Text(
+                        AppText.orSignUpWith,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      Flexible(
+                        child: Divider(
+                          color: dark ? AppColor.darkGray : AppColor.gray,
+                          thickness: 0.5,
+                          indent: 5,
+                          endIndent: 60,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwSectios / 2),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: dark ? AppColor.darkGray : AppColor.gray,
+                          ),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: IconButton(
+                          icon: const Image(
+                            height: AppSizes.iconMd,
+                            width: AppSizes.iconMd,
+                            image: AssetImage(AppImages.googleLogo),
+                          ),
+                          onPressed: () {
+                            controller.googleLogin();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwSectios / 4),
                   
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
