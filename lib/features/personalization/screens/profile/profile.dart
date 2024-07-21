@@ -1,13 +1,11 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shuttle_app/commons/widgets/appbar/appbar.dart';
 import 'package:shuttle_app/commons/widgets/container/circular_image.dart';
 import 'package:shuttle_app/commons/widgets/container/section_headings.dart';
+import 'package:shuttle_app/commons/widgets/loaders/shimmer_loader.dart';
 import 'package:shuttle_app/commons/widgets/profile/profile_menu.dart';
 import 'package:shuttle_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:shuttle_app/features/personalization/controllers/user_controller.dart';
@@ -40,14 +38,22 @@ class ProfileScreen extends StatelessWidget{
                 width: double.infinity,
                 child: Column(
                   children: [
-                    const CircularImage(
-                      image: AppImages.profile, 
-                      width: 80, 
-                      height: 80,
-                      backgroundColor: AppColor.gray,
+                    Obx( () {
+                      final networkImage = userController.user.value.profilePicture;
+                      final image = networkImage!.isNotEmpty ? networkImage : AppImages.profile;
+                      return userController.imageUploadLoading.value
+                      ? const ShimmerLoader(width: 80, height: 80, radius: 80,)
+                      : CircularImage(
+                          isNetworkImage: networkImage.isNotEmpty,
+                          image: image, 
+                          width: 80, 
+                          height: 80,
+                          backgroundColor: AppColor.gray,
+                        );}
                     ),
+                    
                     TextButton(
-                      onPressed: (){}, 
+                      onPressed: (){userController.uploadUserProfilePicture();}, 
                       child: Text(
                         AppText.changePicture,
                         style: TextStyle(
@@ -67,7 +73,7 @@ class ProfileScreen extends StatelessWidget{
               const SizedBox(height: AppSizes.spaceBtwItems,),
 
               Obx(()=> AppProfileMenu(title: 'Name', value: userController.user.value.name, onPressed: (){AppHelperFunctions.navigateToScreen(context, const ChangeName());},)),
-              AppProfileMenu(title: 'User Email', value: userController.user.value.email, icon: Iconsax.copy, onPressed: (){},),
+              AppProfileMenu(title: 'User Name', value: userController.user.value.email, icon: Iconsax.copy, onPressed: (){},),
               
               const SizedBox(height: AppSizes.spaceBtwItems,),
               const Divider(),

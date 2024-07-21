@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:shuttle_app/commons/widgets/container/circular_image.dart';
+import 'package:shuttle_app/commons/widgets/loaders/shimmer_loader.dart';
 import 'package:shuttle_app/features/personalization/controllers/user_controller.dart';
+import 'package:shuttle_app/utils/constants/image_strings.dart';
 
 class CustomHeaderDiscription extends StatelessWidget {
   const CustomHeaderDiscription({
@@ -12,8 +13,8 @@ class CustomHeaderDiscription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(UserController());
-    return  Padding(
-      padding: const EdgeInsets.only(top: 80,left: 20,right: 20,bottom: 20),
+    return Padding(
+      padding: const EdgeInsets.only(top: 80, left: 20, right: 20, bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -28,31 +29,43 @@ class CustomHeaderDiscription extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Obx(
-                ()=> Text(
-                  controller.user.value.name.split(' ').last,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+              Obx(() {
+                if (controller.profileLoading.value) {
+                  return const ShimmerLoader(
+                    width: 80,
+                    height: 15,
+                  );
+                } else {
+                  return Text(
+                    controller.user.value.name.split(' ').last,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                }
+              }),
             ],
           ),
-          const CircleAvatar(
-            radius: 25,
-            backgroundColor: Colors.black,
-            child: Icon(
-              Icons.person,
-              color: Colors.white,
-            ),
-          ),
-      
+          Obx(() {
+            final networkImage = controller.user.value.profilePicture;
+            final image = networkImage!.isNotEmpty ? networkImage : AppImages.profile;
+            return controller.imageUploadLoading.value
+                ? const ShimmerLoader(
+                    width: 80,
+                    height: 80,
+                    radius: 80,
+                  )
+                : CircularImage(
+                    isNetworkImage: networkImage.isNotEmpty,
+                    image: image,
+                    width: 60,
+                    height: 60,
+                  );
+          }),
         ],
       ),
     );
   }
 }
-
-

@@ -62,9 +62,10 @@ class AppText{
   static const String nameChangeDescription = "Use real name for easy verification. This name will be visible to other users.";
   static const String numberChangeDescription = "Use real phone number. This number will be used for verification and communication.";
   static const String emailChangeDescription = "Use real email address. This email will be used for verification and communication.";
-  static const String addressChangeDescription = "Use real address. ";
+  static const String addressChangeDescription = "Use real address. This address will be used for verification and communication.";
   static const String nameChangeSuccess = "Name changed successfully";
   static const String emailChangeSuccess = "Email changed successfully";
   static const String numberChangeSuccess = "Phone number changed successfully";
   static const String addressChangeSuccess = "Address changed successfully";
+  static const String pictureUpdateSuccess = "Profile picture updated successfully";
 }

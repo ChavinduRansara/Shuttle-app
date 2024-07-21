@@ -6,12 +6,10 @@ import 'package:shuttle_app/commons/widgets/container/primary_header_container.d
 import 'package:shuttle_app/commons/widgets/container/section_headings.dart';
 import 'package:shuttle_app/commons/widgets/custom_input_field.dart';
 import 'package:shuttle_app/features/authentication/controllers/sign_up/signup_controller.dart';
-import 'package:shuttle_app/features/personalization/screens/map/user_ride.dart';
 import 'package:shuttle_app/utils/constants/colors.dart';
 import 'package:shuttle_app/utils/constants/image_strings.dart';
 import 'package:shuttle_app/utils/constants/sizes.dart';
 import 'package:shuttle_app/utils/constants/text.dart';
-import 'package:shuttle_app/utils/helpers/helper_functions.dart';
 import 'package:shuttle_app/utils/validator/validation.dart';
 
 class BookAService extends StatelessWidget {
