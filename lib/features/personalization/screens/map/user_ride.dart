@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shuttle_app/commons/widgets/map/generic_map.dart';
 
 class RideScreen extends StatefulWidget {
   const RideScreen({super.key});
@@ -44,10 +45,12 @@ class _RideScreenState extends State<RideScreen> {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     setState(() {
       _currentLocation = LatLng(position.latitude, position.longitude);
       _locationFetched = true;
@@ -59,50 +62,37 @@ class _RideScreenState extends State<RideScreen> {
   Widget build(BuildContext context) {
     final dark = Theme.of(context).brightness == Brightness.dark;
 
+    List<Marker> markers = [
+      if (_locationFetched)
+        const Marker(
+          width: 80.0,
+          height: 80.0,
+          point: colomboLatLng,
+          child: Column(
+            children: [
+              Icon(Iconsax.location, color: Colors.red),
+            ],
+          ),
+        ),
+      const Marker(
+        width: 80.0,
+        height: 80.0,
+        point: colomboLatLng,
+        child: Column(
+          children: [
+            Icon(Iconsax.location, color: Colors.blue),
+          ],
+        ),
+      ),
+    ];
+
     return Scaffold(
       body: Stack(
         children: [
-          // Map
-          FlutterMap(
-            mapController: _mapController,
-            options: MapOptions(
-              initialCenter: _currentLocation ?? colomboLatLng,
-              initialZoom: 13.0,
-            ),
-            children: [
-              TileLayer(
-                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                subdomains: const ['a', 'b', 'c'],
-              ),
-              MarkerLayer(
-                markers: _locationFetched
-                    ? [
-                  const Marker(
-                    width: 80.0,
-                    height: 80.0,
-                    point: colomboLatLng, 
-                    child: Column(
-                      children: [
-                        Icon(Iconsax.location, color: Colors.red),
-                      ],
-                    ),
-                  ),
-
-                      ]
-                    : [
-                  const Marker(
-                    width: 80.0,
-                    height: 80.0,
-                    point: colomboLatLng, 
-                    child: Column(
-                      children: [
-                        Icon(Iconsax.location, color: Colors.blue),
-                      ],
-                    ),
-                  ),
-                    ],
-              ),
-            ],
+          GenericMapWidget(
+            initialCenter: _currentLocation ?? colomboLatLng,
+            initialZoom: 13.0,
+            markers: markers,
           ),
           // Bottom Sheet
           DraggableScrollableSheet(
@@ -168,7 +158,8 @@ class _RideScreenState extends State<RideScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text('Add Waiting Time', style: Theme.of(context).textTheme.labelLarge),
+                          Text('Add Waiting Time',
+                              style: Theme.of(context).textTheme.labelLarge),
                           IconButton(
                             onPressed: () {},
                             icon: const Icon(Iconsax.add_circle),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:shuttle_app/commons/widgets/container/card.dart';
 import 'package:shuttle_app/commons/widgets/container/custom_search_bar.dart';
 import 'package:shuttle_app/commons/widgets/container/primary_header_container.dart';
@@ -66,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                               if (!bus.isAvailable) {
                                 return;
                               }
-                              AppHelperFunctions.navigateToScreen(context, const BookAService());
+                              AppHelperFunctions.navigateToScreen(context, BookAService( routeName: bus.routeName, location: LatLng(bus.location.latitude, bus.location.longitude)));
                             },
                           ),
                         );
