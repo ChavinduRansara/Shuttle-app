@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shuttle_app/commons/widgets/map/generic_map.dart';
+import 'package:shuttle_app/utils/constants/colors.dart';
 
 class RideScreen extends StatefulWidget {
   const RideScreen({super.key});
@@ -16,6 +17,8 @@ class _RideScreenState extends State<RideScreen> {
   late MapController _mapController;
   LatLng? _currentLocation;
   bool _locationFetched = false;
+  bool _isLoading = false;
+  bool _mapReady = false;
 
   static const colomboLatLng = LatLng(6.927079, 79.860017);
 
@@ -27,35 +30,130 @@ class _RideScreenState extends State<RideScreen> {
   }
 
   Future<void> _getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+    setState(() {
+      _isLoading = true;
+    });
 
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
+    try {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        if (mounted) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Location Services Disabled'),
+                content: const Text('Please enable Location Services in your device settings.'),
+                actions: [
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
 
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+      LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied.');
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          if (mounted) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Location Permissions Denied'),
+                  content: const Text('Please grant location permissions to use this feature.'),
+                  actions: [
+                    TextButton(
+                      child: const Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+          setState(() {
+            _isLoading = false;
+          });
+          return;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        if (mounted) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Location Permissions Permanently Denied'),
+                content: const Text('Location permissions are permanently denied, we cannot request permissions.'),
+                actions: [
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      if (mounted) {
+        setState(() {
+          _currentLocation = LatLng(position.latitude, position.longitude);
+          _locationFetched = true;
+          _isLoading = false;
+          if (_mapReady) {
+            _mapController.move(_currentLocation!, 13.0);
+          }
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text('An error occurred while fetching your location. Please try again later.'),
+              actions: [
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
       }
     }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      _currentLocation = LatLng(position.latitude, position.longitude);
-      _locationFetched = true;
-      _mapController.move(_currentLocation!, 13.0);
-    });
   }
 
   @override
@@ -63,27 +161,24 @@ class _RideScreenState extends State<RideScreen> {
     final dark = Theme.of(context).brightness == Brightness.dark;
 
     List<Marker> markers = [
-      if (_locationFetched)
+      if (_isLoading)
         const Marker(
           width: 80.0,
           height: 80.0,
-          point: colomboLatLng,
-          child: Column(
+          point: LatLng(0, 0), // Placeholder coordinates
+          child: CircularProgressIndicator(),
+        ),
+      if (_locationFetched)
+        Marker(
+          width: 80.0,
+          height: 80.0,
+          point: _currentLocation!,
+          child: const Column(
             children: [
               Icon(Iconsax.location, color: Colors.red),
             ],
           ),
         ),
-      const Marker(
-        width: 80.0,
-        height: 80.0,
-        point: colomboLatLng,
-        child: Column(
-          children: [
-            Icon(Iconsax.location, color: Colors.blue),
-          ],
-        ),
-      ),
     ];
 
     return Scaffold(
@@ -93,7 +188,26 @@ class _RideScreenState extends State<RideScreen> {
             initialCenter: _currentLocation ?? colomboLatLng,
             initialZoom: 13.0,
             markers: markers,
+            mapController: _mapController,
+            onMapReady: () {
+              setState(() {
+                _mapReady = true;
+                if (_currentLocation != null) {
+                  _mapController.move(_currentLocation!, 13.0);
+                }
+              });
+            },
           ),
+          // Full screen loader
+          if (_isLoading)
+            Container(
+              color: Colors.black54,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(AppColor.primaryColor),
+                ),
+              ),
+            ),
           // Bottom Sheet
           DraggableScrollableSheet(
             initialChildSize: 0.3,

@@ -6,12 +6,16 @@ class GenericMapWidget extends StatefulWidget {
   final LatLng initialCenter;
   final double initialZoom;
   final List<Marker> markers;
+  final MapController mapController;
+  final VoidCallback onMapReady;
 
   const GenericMapWidget({
     super.key,
     required this.initialCenter,
     required this.initialZoom,
     required this.markers,
+    required this.mapController,
+    required this.onMapReady,
   });
 
   @override
@@ -19,21 +23,14 @@ class GenericMapWidget extends StatefulWidget {
 }
 
 class _GenericMapWidgetState extends State<GenericMapWidget> {
-  late MapController _mapController;
-
-  @override
-  void initState() {
-    super.initState();
-    _mapController = MapController();
-  }
-
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
-      mapController: _mapController,
+      mapController: widget.mapController,
       options: MapOptions(
         initialCenter: widget.initialCenter,
         initialZoom: widget.initialZoom,
+        onMapReady: widget.onMapReady,
       ),
       children: [
         TileLayer(

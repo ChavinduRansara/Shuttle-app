@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:shuttle_app/commons/widgets/appbar/appbar.dart';
 import 'package:shuttle_app/commons/widgets/map/generic_map.dart';
 
-class LiveLocationScreen extends StatelessWidget {
+class LiveLocationScreen extends StatefulWidget {
   const LiveLocationScreen({
     super.key,
     required this.location,
@@ -14,19 +14,31 @@ class LiveLocationScreen extends StatelessWidget {
   final LatLng location;
 
   @override
-  Widget build(BuildContext context) {
+  State<LiveLocationScreen> createState() => _LiveLocationScreenState();
+}
 
+class _LiveLocationScreenState extends State<LiveLocationScreen> {
+  late MapController _mapController;
+
+  @override
+  void initState() {
+    super.initState();
+    _mapController = MapController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     List<Marker> markers = [
-       Marker(
-          width: 80.0,
-          height: 80.0,
-          point: location,
-          child: const Column(
-            children: [
-              Icon(Iconsax.location, color: Colors.red),
-            ],
-          ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: widget.location,
+        child: const Column(
+          children: [
+            Icon(Iconsax.location, color: Colors.red),
+          ],
         ),
+      ),
     ];
 
     return Scaffold(
@@ -35,9 +47,14 @@ class LiveLocationScreen extends StatelessWidget {
         showBackArrow: true,
       ),
       body: GenericMapWidget(
-        initialCenter: location,
+        initialCenter: widget.location,
         initialZoom: 13.0,
         markers: markers,
+        mapController: _mapController,
+        onMapReady: () {
+          setState(() {
+          });
+        },
       ),
     );
   }
